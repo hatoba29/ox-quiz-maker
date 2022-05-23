@@ -14,8 +14,8 @@ export const indexState = selector({
     return pickedProblems[i]
   }
 })
-
 export const resultState = atom<Array<boolean | null>>({
   default: [],
   key: 'result'
 })
+export const timeState = atom({ default: 0, key: 'time' })
