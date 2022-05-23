@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import { useRecoilValue, useRecoilState } from 'recoil'
+import type { ChangeEvent } from 'react'
 
-import { stepState, problemsState, totalState } from '@/store'
-import { ChangeEvent } from 'react'
+import { stepState, problemsState, totalState } from '@/store/problems'
 
 import { Subtitle, BtnWrapper, Btn } from './index'
 

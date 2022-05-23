@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react'
 import styled from 'styled-components'
 import { useRecoilState } from 'recoil'
 
-import { problemsState, problemsNameState, stepState } from '@/store'
+import { problemsState, problemsNameState, stepState } from '@/store/problems'
 import isValidProblems from '@/utils/isValidProblems'
 import getFileName from '@/utils/getFileName'
 

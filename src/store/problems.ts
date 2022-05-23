@@ -1,4 +1,5 @@
 import { atom } from 'recoil'
+
 import type { IProblem } from '@/types/problem'
 
 export const stepState = atom({ default: 0, key: 'step' })
