@@ -1,8 +1,11 @@
 import styled from 'styled-components'
 import { useRecoilValue, useRecoilState } from 'recoil'
+import { useNavigate } from 'react-router-dom'
 import type { ChangeEvent } from 'react'
 
 import { stepState, problemsState, totalState } from '@/store/problems'
+import { pickedProblemsState } from '@/store/solve'
+import pickProblems from '@/utils/pickProblems'
 
 import { Subtitle, BtnWrapper, Btn } from './index'
 
@@ -10,6 +13,8 @@ const SetTotal = (): JSX.Element => {
   const problems = useRecoilValue(problemsState)
   const [total, setTotal] = useRecoilState(totalState)
   const [, setStep] = useRecoilState(stepState)
+  const [, setPickedProblems] = useRecoilState(pickedProblemsState)
+  const navigate = useNavigate()
 
   const handleTotalInput = (e: ChangeEvent<HTMLInputElement>): void => {
     const value = Number(e.currentTarget.value)
@@ -17,11 +22,18 @@ const SetTotal = (): JSX.Element => {
   }
 
   const isDisabled = (): string => {
-    console.log('total', total)
     return total <= 0 ? 'disabled' : ''
   }
 
   const goPrev = (): void => setStep((oldStep) => oldStep - 1)
+
+  const goNext = (): void => {
+    // initialize store for Solve page
+    setStep(0)
+    setPickedProblems(pickProblems(total, problems.length))
+
+    navigate('/solve')
+  }
 
   return (
     <>
@@ -36,7 +48,9 @@ const SetTotal = (): JSX.Element => {
       </InputWrapper>
       <BtnWrapper>
         <Btn onClick={goPrev}>이전</Btn>
-        <Btn className={isDisabled()}>문제 풀기</Btn>
+        <Btn className={isDisabled()} onClick={goNext}>
+          문제 풀기
+        </Btn>
       </BtnWrapper>
     </>
   )
