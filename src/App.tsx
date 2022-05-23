@@ -1,10 +1,17 @@
 import styled from 'styled-components'
+import { Routes, Route, Navigate } from 'react-router-dom'
+
 import Home from '@/pages/Home'
+import Solve from '@/pages/Solve'
 
 const App = (): JSX.Element => {
   return (
     <Container>
-      <Home />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/solve' element={<Solve />} />
+        <Route path='*' element={<Navigate to='/' />} />
+      </Routes>
     </Container>
   )
 }

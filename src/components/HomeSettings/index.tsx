@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { useRecoilValue } from 'recoil'
 
-import { stepState } from '@/store'
+import { stepState } from '@/store/problems'
 
 import SetProblem from './SetProblem'
 import SetLimit from './SetLimit'

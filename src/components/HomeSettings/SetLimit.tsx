@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react'
 import styled from 'styled-components'
 import { useRecoilState } from 'recoil'
 
-import { stepState, limitState } from '@/store'
+import { stepState, limitState } from '@/store/problems'
 
 import { Subtitle, BtnWrapper, Btn } from './index'
 
