@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import Home from '@/pages/Home'
 import Solve from '@/pages/Solve'
 import Result from '@/pages/Result'
+import Review from '@/pages/Review'
 
 const App = (): JSX.Element => {
   return (
@@ -12,6 +13,7 @@ const App = (): JSX.Element => {
         <Route path='/' element={<Home />} />
         <Route path='/solve' element={<Solve />} />
         <Route path='/result' element={<Result />} />
+        <Route path='/review' element={<Review />} />
         <Route path='*' element={<Navigate to='/' />} />
       </Routes>
     </Container>
