@@ -36,7 +36,7 @@ const OXButtons = (): JSX.Element => {
   )
 }
 
-const Wrapper = styled.section`
+export const Wrapper = styled.section`
   width: 100%;
   height: 64px;
   background-color: #afdaad;

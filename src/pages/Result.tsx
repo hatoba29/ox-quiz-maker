@@ -6,6 +6,8 @@ import { resultState, timeState } from '@/store/solve'
 import { totalState } from '@/store/problems'
 import humanizeTime from '@/utils/humanizeTime'
 
+import { Wrapper as BtnWrapper } from '@/components/Solve/OXButtons'
+
 const Result = (): JSX.Element => {
   const result = useRecoilValue(resultState)
   const total = useRecoilValue(totalState)
@@ -27,8 +29,8 @@ const Result = (): JSX.Element => {
         <Stat>소요 시간: {humanizedTime}</Stat>
       </StatWrapper>
       <BtnWrapper>
-        <Btn to='/'>홈으로</Btn>
-        <Btn to='/review'>복습하기</Btn>
+        <LinkBtn to='/'>홈으로</LinkBtn>
+        <LinkBtn to='/review'>복습하기</LinkBtn>
       </BtnWrapper>
     </Wrapper>
   )
@@ -63,26 +65,13 @@ const Stat = styled.li`
   font-size: 20px;
 `
 
-const BtnWrapper = styled.section`
-  width: 100%;
-  height: 64px;
-  background-color: #afdaad;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-`
-
-const Btn = styled(Link)`
+export const LinkBtn = styled(Link)`
   width: 40%;
   height: 48px;
   border: none;
   background-color: #f3df5d;
 
   cursor: pointer;
-
-  text-decoration: none;
-  color: black;
 
   display: grid;
   place-content: center;
