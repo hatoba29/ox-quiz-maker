@@ -1,18 +1,15 @@
 import styled from 'styled-components'
-import { useRecoilValue } from 'recoil'
 
-import { stepState, totalState } from '@/store/problems'
-import { resultState } from '@/store/solve'
+import { useAppSelector } from '@/store'
 
 const ProblemsTab = (): JSX.Element => {
-  const step = useRecoilValue(stepState)
-  const total = useRecoilValue(totalState)
-  const result = useRecoilValue(resultState)
+  const { step, total } = useAppSelector((state) => state.problems)
+  const { result } = useAppSelector((state) => state.solve)
 
   const isCorrect = (i: number): string => {
-    if (result[i] === true) return 'correct'
-    if (result[i] === false) return 'fail'
-    return ''
+    if (result[i]) return 'correct'
+    if (result[i] === undefined) return ''
+    return 'fail'
   }
 
   const renderTabs = (): JSX.Element[] => {

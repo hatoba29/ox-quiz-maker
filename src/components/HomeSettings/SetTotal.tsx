@@ -1,37 +1,35 @@
 import styled from 'styled-components'
-import { useRecoilValue, useRecoilState } from 'recoil'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import type { ChangeEvent } from 'react'
 
-import { stepState, problemsState, totalState } from '@/store/problems'
-import { pickedProblemsState } from '@/store/solve'
+import { useAppSelector } from '@/store'
+import { moveStep, setTotal } from '@/store/problemsSlice'
+import { setPickedProblems } from '@/store/solveSlice'
 import pickProblems from '@/utils/pickProblems'
 
 import { Subtitle, BtnWrapper, Btn } from './index'
 
 const SetTotal = (): JSX.Element => {
-  const problems = useRecoilValue(problemsState)
-  const [total, setTotal] = useRecoilState(totalState)
-  const [, setStep] = useRecoilState(stepState)
-  const [, setPickedProblems] = useRecoilState(pickedProblemsState)
+  const dispatch = useDispatch()
+  const { problems, total } = useAppSelector((state) => state.problems)
   const navigate = useNavigate()
 
   const handleTotalInput = (e: ChangeEvent<HTMLInputElement>): void => {
     const value = Number(e.currentTarget.value)
-    setTotal(value > 0 && value <= problems.length ? value : 0)
+    dispatch(setTotal(value > 0 && value <= problems.length ? value : 0))
   }
 
   const isDisabled = (): string => {
     return total <= 0 ? 'disabled' : ''
   }
 
-  const goPrev = (): void => setStep((oldStep) => oldStep - 1)
+  const goPrev = (): void => {
+    dispatch(moveStep(-1))
+  }
 
   const goNext = (): void => {
-    // initialize store for Solve page
-    setStep(0)
-    setPickedProblems(pickProblems(total, problems.length))
-
+    dispatch(setPickedProblems(pickProblems(total, problems.length)))
     navigate('/solve')
   }
 

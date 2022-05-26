@@ -1,20 +1,24 @@
 import styled from 'styled-components'
-import { useRecoilValue } from 'recoil'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 
-import { pickedProblemsState, resultState } from '@/store/solve'
+import { resetStore, useAppSelector } from '@/store'
 
 import Card from '@/components/Review/Card'
 import { Wrapper as BtnWrapper } from '@/components/Solve/OXButtons'
 import { LinkBtn } from './Result'
 
 const Review = (): JSX.Element => {
-  const result = useRecoilValue(resultState)
-  const pickedProblems = useRecoilValue(pickedProblemsState)
+  const dispatch = useDispatch()
+  const { result, pickedProblems } = useAppSelector((state) => state.solve)
   const wrong = pickedProblems.filter((_, i) => !result[i])
   const [hidden, setHidden] = useState(false)
 
   const updateOption = (): void => setHidden((h) => !h)
+
+  const reset = (): void => {
+    dispatch(resetStore())
+  }
 
   return (
     <Wrapper>
@@ -30,7 +34,9 @@ const Review = (): JSX.Element => {
         ))}
       </CardWrapper>
       <BtnWrapper>
-        <LinkBtn to='/'>홈으로</LinkBtn>
+        <LinkBtn to='/' onClick={reset}>
+          홈으로
+        </LinkBtn>
         <LinkBtn to='/result'>결과보기</LinkBtn>
       </BtnWrapper>
     </Wrapper>

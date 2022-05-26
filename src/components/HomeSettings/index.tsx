@@ -1,7 +1,6 @@
 import styled from 'styled-components'
-import { useRecoilValue } from 'recoil'
 
-import { stepState } from '@/store/problems'
+import { useAppSelector } from '@/store'
 
 import SetProblem from './SetProblem'
 import SetLimit from './SetLimit'
@@ -9,7 +8,7 @@ import SetTotal from './SetTotal'
 
 const HomeSettings = (): JSX.Element => {
   const pages = [SetProblem, SetLimit, SetTotal]
-  const step = useRecoilValue(stepState)
+  const { step } = useAppSelector((state) => state.problems)
   const CurrentPage = pages[step]
 
   return (

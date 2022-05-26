@@ -1,17 +1,17 @@
 import { ChangeEvent } from 'react'
 import styled from 'styled-components'
-import { useRecoilState } from 'recoil'
+import { useDispatch } from 'react-redux'
 
-import { problemsState, problemsNameState, stepState } from '@/store/problems'
+import { useAppSelector } from '@/store'
+import { moveStep, setProblems, setProblemsName } from '@/store/problemsSlice'
 import isValidProblems from '@/utils/isValidProblems'
 import getFileName from '@/utils/getFileName'
 
 import { Subtitle, Btn, BtnWrapper } from './index'
 
 const SetProblem = (): JSX.Element => {
-  const [, setStep] = useRecoilState(stepState)
-  const [problems, setProblems] = useRecoilState(problemsState)
-  const [problemsName, setProblemsName] = useRecoilState(problemsNameState)
+  const dispatch = useDispatch()
+  const { problems, problemsName } = useAppSelector((state) => state.problems)
 
   const registerProblems = async (
     e: ChangeEvent<HTMLInputElement>
@@ -21,8 +21,8 @@ const SetProblem = (): JSX.Element => {
     const text = await file.text()
 
     if (isValidProblems(text)) {
-      setProblems(JSON.parse(text))
-      setProblemsName(getFileName(file.name))
+      dispatch(setProblems(JSON.parse(text)))
+      dispatch(setProblemsName(getFileName(file.name)))
     } else {
       window.alert('올바른 문제 파일이 아닙니다. 다른 파일을 선택해주세요.')
     }
@@ -34,7 +34,7 @@ const SetProblem = (): JSX.Element => {
 
   const goNext = (): void => {
     if (problems.length === 0) return
-    setStep((oldStep) => oldStep + 1)
+    dispatch(moveStep(1))
   }
 
   return (

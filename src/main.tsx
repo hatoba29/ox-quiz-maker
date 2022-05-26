@@ -1,7 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { RecoilRoot } from 'recoil'
+import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
+
+import store from '@/store'
 
 import App from '@/App'
 import '@/assets/main.css'
@@ -11,9 +13,9 @@ const container = document.getElementById('root') as HTMLElement
 createRoot(container).render(
   <StrictMode>
     <BrowserRouter>
-      <RecoilRoot>
+      <Provider store={store}>
         <App />
-      </RecoilRoot>
+      </Provider>
     </BrowserRouter>
   </StrictMode>
 )

@@ -1,27 +1,30 @@
 import { ChangeEvent } from 'react'
 import styled from 'styled-components'
-import { useRecoilState } from 'recoil'
+import { useDispatch } from 'react-redux'
 
-import { stepState, limitState } from '@/store/problems'
+import { useAppSelector } from '@/store'
+import { setLimit, moveStep } from '@/store/problemsSlice'
 
 import { Subtitle, BtnWrapper, Btn } from './index'
 
 const SetLimit = (): JSX.Element => {
-  const [limit, setLimit] = useRecoilState(limitState)
-  const [, setStep] = useRecoilState(stepState)
+  const dispatch = useDispatch()
+  const limit = useAppSelector((state) => state.problems.limit)
 
   const handleLimitInput = (e: ChangeEvent<HTMLInputElement>): void => {
     const value = Number(e.currentTarget.value)
-    setLimit(value > 0 ? value : 0)
+    dispatch(setLimit(value > 0 ? value : 0))
   }
 
   const isDisabled = (): string => (limit <= 0 ? 'disabled' : '')
 
-  const goPrev = (): void => setStep((oldStep) => oldStep - 1)
+  const goPrev = (): void => {
+    dispatch(moveStep(-1))
+  }
 
   const goNext = (): void => {
     if (limit === 0) return
-    setStep((oldStep) => oldStep + 1)
+    dispatch(moveStep(1))
   }
 
   return (
