@@ -1,27 +1,28 @@
 import styled from 'styled-components'
-import { useRecoilValue, useRecoilState } from 'recoil'
+import { useDispatch } from 'react-redux'
 import type { MouseEvent } from 'react'
 
-import { problemsState, stepState } from '@/store/problems'
-import { resultState, indexState } from '@/store/solve'
+import { useAppSelector } from '@/store'
+import { selectIndex, setResult } from '@/store/solveSlice'
+import { moveStep } from '@/store/problemsSlice'
 
 const OXButtons = (): JSX.Element => {
-  const problems = useRecoilValue(problemsState)
-  const index = useRecoilValue(indexState)
-  const [, setStep] = useRecoilState(stepState)
-  const [, setResult] = useRecoilState(resultState)
+  const dispatch = useDispatch()
+  const state = useAppSelector((state) => state)
+  const { problems } = state.problems
+  const index = selectIndex(state)
 
   const checkAnswer = (e: MouseEvent<HTMLButtonElement>): void => {
     const value = Number(e.currentTarget.value)
     const { answer } = problems[index]
 
     if (answer === value) {
-      setResult((oldResult) => [...oldResult, true])
+      dispatch(setResult(true))
     } else {
-      setResult((oldResult) => [...oldResult, false])
+      dispatch(setResult(false))
     }
 
-    setStep((oldStep) => oldStep + 1)
+    dispatch(moveStep(1))
   }
 
   return (

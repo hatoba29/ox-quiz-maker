@@ -1,21 +1,24 @@
 import styled from 'styled-components'
-import { useRecoilValue } from 'recoil'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
-import { resultState, timeState } from '@/store/solve'
-import { totalState } from '@/store/problems'
+import { useAppSelector, resetStore } from '@/store'
 import humanizeTime from '@/utils/humanizeTime'
 
 import { Wrapper as BtnWrapper } from '@/components/Solve/OXButtons'
 
 const Result = (): JSX.Element => {
-  const result = useRecoilValue(resultState)
-  const total = useRecoilValue(totalState)
-  const time = useRecoilValue(timeState)
+  const dispatch = useDispatch()
+  const { total } = useAppSelector((state) => state.problems)
+  const { result, time } = useAppSelector((state) => state.solve)
+
   const correct = result.filter((r) => r).length
   const rate = Math.round((correct / total) * 1000) / 10
-
   const humanizedTime = humanizeTime(time)
+
+  const reset = (): void => {
+    dispatch(resetStore())
+  }
 
   return (
     <Wrapper>
@@ -29,7 +32,9 @@ const Result = (): JSX.Element => {
         <Stat>소요 시간: {humanizedTime}</Stat>
       </StatWrapper>
       <BtnWrapper>
-        <LinkBtn to='/'>홈으로</LinkBtn>
+        <LinkBtn to='/' onClick={reset}>
+          홈으로
+        </LinkBtn>
         <LinkBtn to='/review'>복습하기</LinkBtn>
       </BtnWrapper>
     </Wrapper>

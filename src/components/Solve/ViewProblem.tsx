@@ -1,12 +1,12 @@
 import styled from 'styled-components'
-import { useRecoilValue } from 'recoil'
 
-import { problemsState } from '@/store/problems'
-import { indexState } from '@/store/solve'
+import { useAppSelector } from '@/store'
+import { selectIndex } from '@/store/solveSlice'
 
 const ViewProblem = (): JSX.Element => {
-  const problems = useRecoilValue(problemsState)
-  const index = useRecoilValue(indexState)
+  const state = useAppSelector((state) => state)
+  const { problems } = state.problems
+  const index = selectIndex(state)
 
   return <Problem>{problems[index].problem}</Problem>
 }

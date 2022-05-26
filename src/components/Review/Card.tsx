@@ -1,7 +1,6 @@
 import styled from 'styled-components'
-import { useRecoilValue } from 'recoil'
 
-import { problemsState } from '@/store/problems'
+import { useAppSelector } from '@/store'
 
 interface ICard {
   i: number
@@ -9,7 +8,7 @@ interface ICard {
 }
 
 const Card = (props: ICard): JSX.Element => {
-  const problems = useRecoilValue(problemsState)
+  const { problems } = useAppSelector((state) => state.problems)
   const { i, hidden } = props
   const answer = problems[i].answer === 1 ? 'O' : 'X'
   const answerClass = hidden ? 'hidden' : ''

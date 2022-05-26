@@ -1,20 +1,20 @@
 import styled from 'styled-components'
-import { useRecoilState, useRecoilValue } from 'recoil'
 import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
-import { stepState, limitState } from '@/store/problems'
-import { resultState } from '@/store/solve'
+import { useAppSelector } from '@/store'
+import { setResult } from '@/store/solveSlice'
+import { moveStep } from '@/store/problemsSlice'
 
 const LimitBar = (): JSX.Element => {
-  const [step, setStep] = useRecoilState(stepState)
-  const [, setResult] = useRecoilState(resultState)
-  const limit = useRecoilValue(limitState)
+  const dispatch = useDispatch()
+  const { step, limit } = useAppSelector((state) => state.problems)
   let timerID: number
 
   useEffect(() => {
     timerID = setTimeout(() => {
-      setStep((oldStep) => oldStep + 1)
-      setResult((oldResult) => [...oldResult, false])
+      dispatch(moveStep(1))
+      dispatch(setResult(false))
     }, limit * 1000)
     return () => clearTimeout(timerID)
   }, [step])
